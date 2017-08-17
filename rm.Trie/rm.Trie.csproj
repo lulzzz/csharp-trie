@@ -40,9 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITrie.cs" />
+    <Compile Include="ITrieMap.TValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trie.cs" />
+    <Compile Include="TrieMap.TValue.cs" />
     <Compile Include="TrieNode.cs" />
+    <Compile Include="TrieNode.TValue.cs" />
+    <Compile Include="TrieNodeBase.cs" />
+    <Compile Include="TrieNodeBaseEqualityComparer.cs" />
     <Compile Include="Wrapped.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,16 +10,16 @@ namespace rm.Trie
 	/// </summary>
 	internal class Trie : ITrie
 	{
-		#region Data Members
+		#region data members
 
 		/// <summary>
 		/// Root TrieNode.
 		/// </summary>
-		private TrieNode rootTrieNode { get; set; }
+		private readonly TrieNode rootTrieNode;
 
 		#endregion
 
-		#region Ctors
+		#region ctors
 
 		/// <summary>
 		/// Creates a new Trie instance.
@@ -187,7 +187,7 @@ namespace rm.Trie
 
 		#endregion
 
-		#region Private methods
+		#region private methods
 
 		/// <summary>
 		/// Gets the equivalent TrieNode in the Trie for given prefix. 

@@ -3,7 +3,7 @@ csharp-trie
 
 A trie (prefix tree) data structure implementation in C#.
 
-### Methods
+### Trie Methods
 
 ```c#
 // Adds a word to the Trie.
@@ -46,7 +46,7 @@ int Count();
 int UniqueCount();
 ```
 
-### Example
+### Trie Example
 
 ```c#
 // Creates a new trie.
@@ -91,6 +91,86 @@ trie.AddWord("test"); // adding "test" again
 var count = trie.Count();
 var uniqueCount = trie.UniqueCount();
 ```
+
+### TrieMap Methods
+
+```c#
+// Gets TValue item for key from TrieMap.
+TValue ValueBy(string key);
+
+// Gets TValue items by key prefix from TrieMap.
+IEnumerable<TValue> ValuesBy(string keyPrefix);
+
+// Gets all TValue items from TrieMap.
+IEnumerable<TValue> Values();
+
+// Gets all keys from TrieMap.
+IEnumerable<string> Keys();
+
+// Gets all string->TValue pairs from TrieMap.
+IEnumerable<KeyValuePair<string, TValue>> KeyValuePairs();
+
+// Adds TValue item for key to TrieMap.
+void Add(string key, TValue value);
+
+// Returns true if key present in TrieMap.
+bool HasKey(string key);
+
+// Returns true if key prefix present in TrieMap.
+bool HasKeyPrefix(string keyPrefix);
+
+// Removes key from TrieMap
+void Remove(string key);
+
+// Removes key prefix from TrieMap and return true else false.
+bool RemoveKeyPrefix(string keyPrefix);
+
+// Clears all values from TrieMap.
+void Clear();
+```
+
+### TrieMap Example
+
+```c#
+ITrieMap<int> trieMap = new TrieMap<int>();
+
+// Adds key-value.
+trieMap.Add("key1", 1);
+trieMap.Add("key12", 12);
+trieMap.Add("key2", 2);
+
+// Gets value item for key.
+var value = trieMap.ValueBy("key1"); // value = 1
+
+// Gets value items by key prefix.
+var values = trieMap.ValuesBy("key1"); // values = { 1, 12 }
+
+// Gets all value items.
+var values = trieMap.Values(); // values = { 1, 12, 2 }
+
+// Gets all value items.
+var keys = trieMap.Keys(); // keys = { "key1", "key12", "key2" }
+
+// Gets all key-value items.
+var kvPairs = trieMap.KeyValuePairs();
+
+// Returns true if key present.
+bool hasKey = trieMap.HasKey("key1"); // hasKey = true
+
+// Returns true if key prefix present.
+bool hasKeyPrefix = trieMap.HasKeyPrefix("key"); // hasKeyPrefix = true
+
+// Removes key.
+trieMap.Remove("key1");
+trieMap.Remove("key"); // throws
+
+// Removes by key prefix.
+bool isKeyPrefixRemoved = trieMap.RemoveKeyPrefix("key"); // isKeyPrefixRemoved = true
+
+// Clears triemap.
+trieMap.Clear();
+```
+
 
 #### Note: 
 
