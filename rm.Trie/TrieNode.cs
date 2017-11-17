@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace rm.Trie
@@ -11,14 +12,14 @@ namespace rm.Trie
 	/// but TrieNode{int}.Value is exposed as public and the design is not
 	/// intuitive.
 	/// </remarks>
-	internal class TrieNode : TrieNodeBase
+	public class TrieNode : TrieNodeBase
 	{
 		#region data members
 
 		/// <summary>
 		/// Boolean to indicate whether the root to this node forms a word.
 		/// </summary>
-		internal bool IsWord
+		public bool IsWord
 		{
 			get { return WordCount > 0; }
 		}
@@ -26,7 +27,7 @@ namespace rm.Trie
 		/// <summary>
 		/// The count of words for the TrieNode.
 		/// </summary>
-		internal int WordCount { get; set; }
+		public int WordCount { get; internal set; }
 
 		#endregion
 
@@ -52,14 +53,28 @@ namespace rm.Trie
 			WordCount = 0;
 		}
 
-		internal new TrieNode GetChild(char character)
+		public TrieNode GetChild(char character)
 		{
-			return base.GetChild(character) as TrieNode;
+			return base.GetChildInner(character) as TrieNode;
 		}
 
-		internal new IEnumerable<TrieNode> GetChildren()
+		public bool HasChild(char character)
 		{
-			return base.GetChildren().Cast<TrieNode>();
+			return GetChild(character) != null;
+		}
+
+		public TrieNode GetTrieNode(string prefix)
+		{
+			if (prefix == null)
+			{
+				throw new ArgumentNullException(nameof(prefix));
+			}
+			return base.GetTrieNodeInner(prefix) as TrieNode;
+		}
+
+		public IEnumerable<TrieNode> GetChildren()
+		{
+			return base.GetChildrenInner().Cast<TrieNode>();
 		}
 
 		#endregion

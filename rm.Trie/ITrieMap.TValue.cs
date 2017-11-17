@@ -49,6 +49,12 @@ namespace rm.Trie
 		bool HasKeyPrefix(string keyPrefix);
 
 		/// <summary>
+		/// Gets the equivalent TrieNode in the TrieMap for given key prefix. 
+		/// If prefix not present, then returns null.
+		/// </summary>
+		TrieNode<TValue> GetTrieNode(string keyPrefix);
+
+		/// <summary>
 		/// Removes key from TrieMap.
 		/// </summary>
 		void Remove(string key);
@@ -62,5 +68,10 @@ namespace rm.Trie
 		/// Clears all values from TrieMap.
 		/// </summary>
 		void Clear();
+
+		/// <summary>
+		/// Gets the root TrieNode of the TrieMap.
+		/// </summary>
+		TrieNode<TValue> GetRootTrieNode();
 	}
 }

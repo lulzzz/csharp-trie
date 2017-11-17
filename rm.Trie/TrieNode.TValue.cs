@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace rm.Trie
@@ -7,7 +8,7 @@ namespace rm.Trie
 	/// TrieNode[TValue] node to save TValue item.
 	/// </summary>
 	/// <typeparam name="TValue">Type of Value at each TrieNode.</typeparam>
-	internal class TrieNode<TValue> : TrieNodeBase
+	public class TrieNode<TValue> : TrieNodeBase
 	{
 		#region data members
 
@@ -48,7 +49,7 @@ namespace rm.Trie
 		/// <summary>
 		/// Returns true if contains value.
 		/// </summary>
-		internal bool HasValue()
+		public bool HasValue()
 		{
 			return hasValue;
 		}
@@ -62,14 +63,28 @@ namespace rm.Trie
 			hasValue = false;
 		}
 
-		internal new TrieNode<TValue> GetChild(char character)
+		public TrieNode<TValue> GetChild(char character)
 		{
-			return base.GetChild(character) as TrieNode<TValue>;
+			return base.GetChildInner(character) as TrieNode<TValue>;
 		}
 
-		internal new IEnumerable<TrieNode<TValue>> GetChildren()
+		public bool HasChild(char character)
 		{
-			return base.GetChildren().Cast<TrieNode<TValue>>();
+			return GetChild(character) != null;
+		}
+
+		public TrieNode<TValue> GetTrieNode(string prefix)
+		{
+			if (prefix == null)
+			{
+				throw new ArgumentNullException(nameof(prefix));
+			}
+			return base.GetTrieNodeInner(prefix) as TrieNode<TValue>;
+		}
+
+		public IEnumerable<TrieNode<TValue>> GetChildren()
+		{
+			return base.GetChildrenInner().Cast<TrieNode<TValue>>();
 		}
 
 		#endregion

@@ -8,14 +8,14 @@ namespace rm.Trie
 	/// TrieNodeBase is an internal abstract class to encapsulate recursive, helper etc. methods.
 	/// </summary>
 	[DebuggerDisplay("Character = {Character}")]
-	internal abstract class TrieNodeBase : IEquatable<TrieNodeBase>
+	public abstract class TrieNodeBase : IEquatable<TrieNodeBase>
 	{
 		#region data members
 
 		/// <summary>
 		/// The character for the TrieNode.
 		/// </summary>
-		internal char Character { get; private set; }
+		public char Character { get; private set; }
 
 		/// <summary>
 		/// Children Character->TrieNode map.
@@ -40,15 +40,29 @@ namespace rm.Trie
 
 		#region methods
 
-		internal IEnumerable<TrieNodeBase> GetChildren()
+		internal IEnumerable<TrieNodeBase> GetChildrenInner()
 		{
 			return children.Values;
 		}
 
-		internal TrieNodeBase GetChild(char character)
+		internal TrieNodeBase GetChildInner(char character)
 		{
 			TrieNodeBase trieNode;
 			children.TryGetValue(character, out trieNode);
+			return trieNode;
+		}
+
+		internal TrieNodeBase GetTrieNodeInner(string prefix)
+		{
+			TrieNodeBase trieNode = this;
+			foreach (var prefixChar in prefix)
+			{
+				trieNode = trieNode.GetChildInner(prefixChar);
+				if (trieNode == null)
+				{
+					break;
+				}
+			}
 			return trieNode;
 		}
 

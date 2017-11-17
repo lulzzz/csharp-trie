@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 
@@ -12,6 +13,7 @@ namespace rm.Trie.Test
 	[Category("Unit")]
 	public class TrieMapTest
 	{
+		[DebuggerDisplay("Data = {Data}")]
 		class ValueClass
 		{
 			public int Data { get; set; }
@@ -214,6 +216,74 @@ namespace rm.Trie.Test
 			trieO.Clear();
 			Assert.IsFalse(trieO.HasKey("key123"));
 			Assert.AreEqual(0, trieO.Values().Count());
+		}
+
+		[Test]
+		public void GetTrieNode_NotNull01()
+		{
+			var key1Node = trie.GetTrieNode("key1");
+			Assert.IsNotNull(key1Node);
+			Assert.AreEqual('1', key1Node.Character);
+			Assert.AreEqual(1, key1Node.Value);
+			Assert.IsTrue(key1Node.HasChild('2'));
+			var key12Node = key1Node.GetChild('2');
+			Assert.AreEqual('2', key12Node.Character);
+			// "key12" does not exists
+			Assert.AreEqual(0, key12Node.Value);
+			var key123Node = key1Node.GetTrieNode("23");
+			Assert.AreEqual('3', key123Node.Character);
+			Assert.AreEqual(123, key123Node.Value);
+		}
+
+		[Test]
+		public void GetTrieNode_NotNull02()
+		{
+			var key1Node = trieO.GetTrieNode("key1");
+			Assert.IsNotNull(key1Node);
+			Assert.AreEqual('1', key1Node.Character);
+			Assert.AreEqual(1, key1Node.Value.Data);
+			Assert.IsTrue(key1Node.HasChild('2'));
+			var key12Node = key1Node.GetChild('2');
+			Assert.AreEqual('2', key12Node.Character);
+			// key "key12" does not exists
+			Assert.IsNull(key12Node.Value);
+			var key123Node = key1Node.GetTrieNode("23");
+			Assert.AreEqual('3', key123Node.Character);
+			Assert.IsNotNull(key123Node.Value);
+			Assert.AreEqual(123, key123Node.Value.Data);
+		}
+
+		[Test]
+		public void GetTrieNode_Null01()
+		{
+			var key1Node = trie.GetTrieNode("key1");
+			var key1zNode = key1Node.GetChild('z');
+			Assert.IsNull(key1zNode);
+		}
+
+		[Test]
+		public void GetTrieNode_Null02()
+		{
+			var key1Node = trieO.GetTrieNode("key1");
+			Assert.IsFalse(key1Node.HasChild('z'));
+			var key1zNode = key1Node.GetChild('z');
+			Assert.IsNull(key1zNode);
+		}
+
+		[Test]
+		public void GetRoot01()
+		{
+			var root = trie.GetRootTrieNode();
+			Assert.IsNotNull(root);
+			Assert.AreEqual(' ', root.Character);
+		}
+
+		[Test]
+		public void GetRoot02()
+		{
+			var root = trieO.GetRootTrieNode();
+			Assert.IsNotNull(root);
+			Assert.AreEqual(' ', root.Character);
 		}
 
 		#endregion

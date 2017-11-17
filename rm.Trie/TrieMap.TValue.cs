@@ -24,7 +24,7 @@ namespace rm.Trie
 		/// <summary>
 		/// Create a new TrieMap instance.
 		/// </summary>
-		internal TrieMap()
+		public TrieMap()
 		{
 			rootTrieNode = new TrieNode<TValue>(' ');
 		}
@@ -142,6 +142,19 @@ namespace rm.Trie
 		}
 
 		/// <summary>
+		/// Gets the equivalent TrieNode in the TrieMap for given key prefix. 
+		/// If prefix not present, then returns null.
+		/// </summary>
+		public TrieNode<TValue> GetTrieNode(string keyPrefix)
+		{
+			if (keyPrefix == null)
+			{
+				throw new ArgumentNullException(nameof(keyPrefix));
+			}
+			return rootTrieNode.GetTrieNode(keyPrefix);
+		}
+
+		/// <summary>
 		/// Removes key from TrieMap.
 		/// </summary>
 		public void Remove(string key)
@@ -172,27 +185,17 @@ namespace rm.Trie
 			rootTrieNode.Clear();
 		}
 
+		/// <summary>
+		/// Gets the root TrieNode of the TrieMap.
+		/// </summary>
+		public TrieNode<TValue> GetRootTrieNode()
+		{
+			return rootTrieNode;
+		}
+
 		#endregion
 
 		#region private methods
-
-		/// <summary>
-		/// Gets the equivalent TrieNode in the TrieMap for given prefix. 
-		/// If prefix not present, then return null.
-		/// </summary>
-		private TrieNode<TValue> GetTrieNode(string prefix)
-		{
-			var trieNode = rootTrieNode;
-			foreach (var c in prefix)
-			{
-				trieNode = trieNode.GetChild(c);
-				if (trieNode == null)
-				{
-					break;
-				}
-			}
-			return trieNode;
-		}
 
 		/// <summary>
 		/// DFS traversal starting from given TrieNode and yield.

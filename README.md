@@ -27,6 +27,9 @@ bool HasWord(string word);
 // Returns true if the prefix is present in the Trie.
 bool HasPrefix(string prefix);
 
+// Gets the equivalent TrieNode in the Trie for given prefix.
+TrieNode GetTrieNode(string prefix)
+
 // Returns the count for the word in the Trie.
 int WordCount(string word);
 
@@ -44,6 +47,9 @@ int Count();
 
 // Gets unique word count in the Trie.
 int UniqueCount();
+
+// Gets the root trieNode.
+TrieNode GetRootTrieNode();
 ```
 
 ### Trie Example
@@ -68,6 +74,12 @@ var hasWord = trie.HasWord("test");
 // Checks if a prefix is present.
 var hasPrefix = trie.HasPrefix("tes");
 
+// Gets trieNode for prefix.
+TrieNode trieNode = trie.GetTrieNode("tes");
+
+// Gets trieNode from trieNode by prefix.
+TrieNode testTrieNode = trieNode.GetTrieNode("t");
+
 // Gets word count for a word.
 var wordCount = trie.WordCount("test");
 
@@ -90,6 +102,10 @@ trie.Clear();
 trie.AddWord("test"); // adding "test" again
 var count = trie.Count();
 var uniqueCount = trie.UniqueCount();
+
+// Gets the root trieNode.
+var root = trie.GetRootTrieNode();
+
 ```
 
 ### TrieMap Methods
@@ -119,7 +135,10 @@ bool HasKey(string key);
 // Returns true if key prefix present in TrieMap.
 bool HasKeyPrefix(string keyPrefix);
 
-// Removes key from TrieMap
+// Gets TrieNode for given key prefix.
+TrieNode<TValue> GetTrieNode(string keyPrefix)
+
+// Removes key from TrieMap.
 void Remove(string key);
 
 // Removes key prefix from TrieMap and return true else false.
@@ -127,6 +146,9 @@ bool RemoveKeyPrefix(string keyPrefix);
 
 // Clears all values from TrieMap.
 void Clear();
+
+// Gets the root trieNode.
+TrieNode<TValue> GetRootTrieNode();
 ```
 
 ### TrieMap Example
@@ -160,6 +182,12 @@ bool hasKey = trieMap.HasKey("key1"); // hasKey = true
 // Returns true if key prefix present.
 bool hasKeyPrefix = trieMap.HasKeyPrefix("key"); // hasKeyPrefix = true
 
+// Gets trieNode for key prefix.
+TrieNode<int> key1TrieNode = trie.GetTrieNode("key1");
+
+// Gets trieNode from trieNode by prefix.
+TrieNode<int> key12TrieNode = key1TrieNode.GetTrieNode("2");
+
 // Removes key.
 trieMap.Remove("key1");
 trieMap.Remove("key"); // throws
@@ -169,6 +197,9 @@ bool isKeyPrefixRemoved = trieMap.RemoveKeyPrefix("key"); // isKeyPrefixRemoved 
 
 // Clears triemap.
 trieMap.Clear();
+
+// Gets the root trieNode.
+var root = trie.GetRootTrieNode();
 ```
 
 
