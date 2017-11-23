@@ -213,7 +213,7 @@ namespace rm.Trie
 			}
 			foreach (var child in trieNode.GetChildren())
 			{
-				// todo: using buffer is not efficient for values() and kvPairs()
+				// buffer is not used always but it's ok
 				buffer.Append(child.Character);
 				foreach (var item in Traverse(child, buffer, transform))
 				{
